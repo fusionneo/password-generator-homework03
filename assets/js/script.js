@@ -16,9 +16,6 @@ function writePassword() {
 }
 
 function generatePassword() {
-  var conditionsArray = [];
-  console.log(conditionsArray);
-
   alert("Let's generate a secure password for you!");
   alert("You will be prompted for password criteria.\nPlease select at least one character type for your password.")
 
@@ -29,9 +26,8 @@ function generatePassword() {
       lenPrompt = prompt("Please enter a valid length between 8-128 characters.");
     }
   }
-  console.log(lenPrompt);
 
-  //Ask user if they want lowercase chars and validate their input against given criteria.
+  // Ask user if they want lowercase chars and validate their input against given criteria.
   //Error checking for lowercase letters.
   var lowerPrompt = prompt("Would you like LOWERCASE characters? \nPlease enter 'Y' or 'N'.");
   var lowerPromptCheck = lowerPrompt.toUpperCase();
@@ -41,10 +37,9 @@ function generatePassword() {
       lowerPrompt = prompt("Please enter 'Y' or 'N'.");
       lowerPromptCheck = lowerPrompt.toUpperCase();
     }
-    console.log("User chose: " + lowerPromptCheck + " for lowercase");
 
-  //Ask user if they want uppercase chars and validate their input against given criteria.
-  //Error checking for lowercase letters.
+  // Ask user if they want uppercase chars and validate their input against given criteria.
+  // Error checking for lowercase letters.
   var upperPrompt = prompt("Would you like UPPERCASE characters? \nPlease enter 'Y' or 'N'.");
   var upperPromptCheck = upperPrompt.toUpperCase();
 
@@ -53,10 +48,9 @@ function generatePassword() {
       upperPrompt = prompt("Please enter 'Y' or 'N'.");
       upperPromptCheck = upperPrompt.toUpperCase();
     }
-    console.log("User chose: " + upperPromptCheck + " for uppercase");
 
-  //Ask user if they want numbers and validate their input against given criteria.
-  //Error checking for lowercase letters.
+  // Ask user if they want numbers and validate their input against given criteria.
+  // Error checking for lowercase letters.
   var numberPrompt = prompt("Would you like NUMBERS? \nPlease enter 'Y' or 'N'.");
   var numberPromptCheck = numberPrompt.toUpperCase();
   
@@ -65,10 +59,9 @@ function generatePassword() {
       var numberPrompt = prompt("Please enter 'Y' or 'N'.");
       var numberPromptCheck = numberPrompt.toUpperCase();
     }
-    console.log("User chose: " + numberPromptCheck + " for numbers");
 
-  //Ask user if they want symbols and validate their input against given criteria.
-  //Error checking for lowercase letters.
+  // Ask user if they want symbols and validate their input against given criteria.
+  // Error checking for lowercase letters.
   var symbolPrompt = prompt("Would you like SYMBOLS? \nPlease enter 'Y' or 'N'.");
   var symbolPromptCheck = symbolPrompt.toUpperCase();
   
@@ -77,17 +70,18 @@ function generatePassword() {
       var symbolPrompt = prompt("Please enter 'Y' or 'N'.");
       var symbolPromptCheck = symbolPrompt.toUpperCase();
     }
-  console.log("User chose: " + symbolPromptCheck + " for symbols");
 
 
-//If user selected no for all passwords, alert them to try again and return a null value.
+
+// If user selected no for all password criteria, alert them to try again and return a null value.
 if (lowerPromptCheck == "N" && upperPromptCheck == "N" && numberPromptCheck == "N" && symbolPromptCheck == "N")
   {
     alert("You must select at least one character type.\nPlease click Generate Password and try again.");
     return;
   }
 
-const userChoice = [];
+// If the user selected "Y" for a criteria, the corresponding array will be pushed into our userChoice array.
+var userChoice = [];
 
 if (lowerPromptCheck == "Y")
   {
@@ -109,20 +103,25 @@ if (symbolPromptCheck == "Y")
     userChoice.push(specialChars)
   }
 
-var generatedPassword;
+// Create a blank variable to store our password.
+var generatedPassword = "";
+
+// Iterate through the loop based on the required password length as specified by the user.
 for (i = 0; i < lenPrompt; i++)
-{
-  x = Math.floor((Math.random() * (userChoice.length)));
-  y = Math.floor((Math.random() * (userChoice[x].length)));
-  var generatedPassword = userChoice[x][y];
-  
-  console.log(generatedPassword);
-}
+  {
+    // x will generate a random value for which criteria we want to pull from (lowercase, uppercase, numbers, or symbols.)
+    // y will generate a random value for the exact character from the given array child we are indexing into.
+    x = Math.floor((Math.random() * (userChoice.length)));
+    y = Math.floor((Math.random() * (userChoice[x].length)));
+
+    // Begin generating the password for the user.
+    var generatedPassword = generatedPassword + userChoice[x][y];
+  }
+
+// Return the completed generated password for the user.
+return generatedPassword;
 
 }
-
-
-
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
